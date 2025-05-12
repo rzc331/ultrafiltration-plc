@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://www.plcopen.org/xml/tc6_0200">
+  <fileHeader companyName="DuPont" productName="Ultrafiltration Skid Control" productVersion="1.0" creationDateTime="2023-06-01T12:00:00"/>
+  <contentHeader name="DuPont_Ultrafiltration_Control" modificationDateTime="2023-06-01T12:00:00">
+    <coordinateInfo>
+      <fbd><scaling x="1" y="1"/></fbd>
+      <ld><scaling x="1" y="1"/></ld>
+      <sfc><scaling x="1" y="1"/></sfc>
+    </coordinateInfo>
+  </contentHeader>
+  <types>
+    <dataTypes/>
+    <pous>
+      <pou name="UltrafiltrationMain" pouType="program">
+        <interface>
+          <localVars>
+            <variable name="TON_StateTimer">
+              <type><derived name="TON"/></type>
+            </variable>
+            <variable name="TON_CEBInterval">
+              <type><derived name="TON"/></type>
+            </variable>
+            <variable name="R_TRIG_StartFiltration">
+              <type><derived name="R_TRIG"/></type>
+            </variable>
+            <variable name="R_TRIG_StopSystem">
+              <type><derived name="R_TRIG"/></type>
+            </variable>
+            <variable name="R_TRIG_StartCEB">
+              <type><derived name="R_TRIG"/></type>
+            </variable>
+            <variable name="R_TRIG_StartCIP">
+              <type><derived name="R_TRIG"/></type>
+            </variable>
+          </localVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">
+              <p>INCLUDE "src/POUs/UltrafiltrationMain.st"</p>
+            </xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="StateIdle" pouType="function">
+        <interface/>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">
+              <p>INCLUDE "src/POUs/StateIdle.st"</p>
+            </xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="StateFiltration" pouType="function">
+        <interface/>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">
+              <p>INCLUDE "src/POUs/StateFiltration.st"</p>
+            </xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="StateAirScour" pouType="function">
+        <interface/>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">
+              <p>INCLUDE "src/POUs/StateAirScour.st"</p>
+            </xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="StateGravityDrain" pouType="function">
+        <interface/>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">
+              <p>INCLUDE "src/POUs/StateGravityDrain.st"</p>
+            </xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="StateBackwashTop" pouType="function">
+        <interface/>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">
+              <p>INCLUDE "src/POUs/StateBackwashTop.st"</p>
+            </xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="StateBackwashBottom" pouType="function">
+        <interface/>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">
+              <p>INCLUDE "src/POUs/StateBackwashBottom.st"</p>
+            </xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="StateForwardFlush" pouType="function">
+        <interface/>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">
+              <p>INCLUDE "src/POUs/StateForwardFlush.st"</p>
+            </xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="StateCEB" pouType="functionBlock">
+        <interface>
+          <inputVars>
+            <variable name="Start">
+              <type><BOOL/></type>
+            </variable>
+            <variable name="Stop">
+              <type><BOOL/></type>
+            </variable>
+          </inputVars>
+          <outputVars>
+            <variable name="Done">
+              <type><BOOL/></type>
+            </variable>
+            <variable name="Running">
+              <type><BOOL/></type>
+            </variable>
+          </outputVars>
+          <localVars>
+            <variable name="CEBStep">
+              <type><INT/></type>
+              <initialValue>0</initialValue>
+            </variable>
+            <variable name="TON_CEBTimer">
+              <type><derived name="TON"/></type>
+            </variable>
+          </localVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">
+              <p>INCLUDE "src/POUs/StateCEB.st"</p>
+            </xhtml>
+          </ST>
+        </body>
+      </pou>
+      <pou name="StateCIP" pouType="functionBlock">
+        <interface>
+          <inputVars>
+            <variable name="Start">
+              <type><BOOL/></type>
+            </variable>
+            <variable name="Stop">
+              <type><BOOL/></type>
+            </variable>
+            <variable name="CIPFilterInstalled">
+              <type><BOOL/></type>
+            </variable>
+          </inputVars>
+          <outputVars>
+            <variable name="Done">
+              <type><BOOL/></type>
+            </variable>
+            <variable name="Running">
+              <type><BOOL/></type>
+            </variable>
+            <variable name="RequestOperatorConfirmation">
+              <type><BOOL/></type>
+            </variable>
+            <variable name="CurrentCIPStep">
+              <type><INT/></type>
+            </variable>
+            <variable name="Message">
+              <type><string/></type>
+            </variable>
+          </outputVars>
+          <localVars>
+            <variable name="CIPStep">
+              <type><INT/></type>
+              <initialValue>0</initialValue>
+            </variable>
+            <variable name="TON_CIPTimer">
+              <type><derived name="TON"/></type>
+            </variable>
+            <variable name="CIPInstalled">
+              <type><BOOL/></type>
+              <initialValue>FALSE</initialValue>
+            </variable>
+            <variable name="SoakTime">
+              <type><time/></type>
+              <initialValue>T#30M</initialValue>
+            </variable>
+            <variable name="RinseTime">
+              <type><time/></type>
+              <initialValue>T#5M</initialValue>
+            </variable>
+          </localVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">
+              <p>INCLUDE "src/POUs/StateCIP.st"</p>
+            </xhtml>
+          </ST>
+        </body>
+      </pou>
+    </pous>
+  </types>
+  <instances>
+    <configurations>
+      <configuration name="DuPont_UF_Config">
+        <resource name="PLC_Logic">
+          <globalVars>
+            <file>src/Global/Global_Variables.st</file>
+          </globalVars>
+          <task name="MainTask" interval="T#50ms" priority="1">
+            <pouInstance name="MainProgram" typeName="UltrafiltrationMain"/>
+          </task>
+        </resource>
+      </configuration>
+    </configurations>
+  </instances>
+</project> 
